@@ -4,9 +4,12 @@ Description: This module contains all the functions needed to run the main modul
 Author: Kacper Turek
 Date: 2023-07-17
 """
-from random import randint
+
+import random
 
 user_numbers = set()
+COST_OF_SINGLE_DRAW = 3
+allowed_numbers = range(1, 50)
 
 
 def user_lotto_numbers():
@@ -32,12 +35,8 @@ def lotto_numbers():
     Function that randomly selects 6 numbers from the range of 1 to 49.
     :return: 6 pseudorandom numbers.
     """
-    numbers = set()
-    while len(numbers) < 6:
-        random_number = randint(1, 49)
-        numbers.add(random_number)
 
-    return numbers
+    return set(random.sample(allowed_numbers, k=6))
 
 
 def compare_numbers(set1, set2):
@@ -57,6 +56,7 @@ def how_many_numbers_matched():
     The function checks how many times we hit a particular prize in the lottery.
     :return: The number of wins for individual lottery numbers.
     """
+
     counter = 0
     counter3 = 0
     counter4 = 0
@@ -103,8 +103,10 @@ def main():
     user_lotto_numbers()
     counter_value, counter5_value, counter4_value, counter3_value = how_many_numbers_matched()
     years, weeks, days = years_needed_to_win(counter_value)
+    total_cost = COST_OF_SINGLE_DRAW * 3 * counter_value
     print(f'Brawo! Zdobyłeś 6 za {counter_value} razem'
           f' natomiast 5 zdobyłeś {counter5_value} razy,'
           f' 4 zdobyłeś {counter4_value} razy,'
           f' a 3 {counter3_value} razy')
     print(f'Zajęło Ci to {years} lat, {weeks} tygodni i {days} dni.')
+    print(f'Koszt inwestycji wyniósł {total_cost}')
